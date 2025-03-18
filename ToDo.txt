@@ -6,7 +6,7 @@ FITAKA :
 
 -Concept : 
     FRONT OFFICE :
-    1) Page a propos : avec bouton continuer  Mitia 
+    1) Page a propos : avec bouton continuer  Mitia  OKAY
     2) Formulaire de demande de ce que vous voulez -> creation link Mitia
     3) Liste de tous les demandes (SEO) Mitia 
     4) Details de la demande Ifa
@@ -14,7 +14,7 @@ FITAKA :
     6) Azoko ny volanla fa misaotra Ifa
 
     BACK OFFICE :
-    1)Login Ifa
+    1)Login Ifa  OKAY
     1) Affichage google analytics Ifa
     2) Affichage google tag manager Mitia
 
