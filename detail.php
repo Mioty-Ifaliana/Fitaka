@@ -1,61 +1,50 @@
 <?php
-require_once 'myCon.php';
+session_start();
+require_once 'db_connect.php';
 
-if (!isset($_GET['url'])) {
-    header('Location: /demandes');
-    exit();
-}
-
-$database = new Database();
-$db = $database->getConnection();
-
-if ($db) {
-    $url = $_GET['url'];
-    $query = "SELECT * FROM demande WHERE url = :url";
-    $stmt = $db->prepare($query);
-    $stmt->execute([':url' => $url]);
-    $demande = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$demande) {
-        header('Location: /demandes');
-        exit();
-    }
-
-    // Définir l'URL canonique
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
-    $canonical = $protocol . $_SERVER['HTTP_HOST'] . '/demande/' . $url;
-} else {
-    header('Location: /demandes');
-    exit();
+if (isset($_GET['id'])) {
+    $demande_id = $_GET['id'];
+    
+    // Get demande details
+    $sql = "SELECT * FROM demande WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $demande_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $demande = $result->fetch_assoc();
 }
 ?>
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($demande['nom']); ?> - FITAKA</title>
-    <meta name="description" content="<?php echo htmlspecialchars(substr($demande['description'], 0, 155)); ?>">
-    <link rel="canonical" href="<?php echo $canonical; ?>">
+    <title>Détails de la demande</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/demandes">Retour à la liste</a>
-        </nav>
-    </header>
-
-    <main>
-        <article>
-            <h1><?php echo htmlspecialchars($demande['nom']); ?></h1>
-            <div class="description">
-                <?php echo nl2br(htmlspecialchars($demande['description'])); ?>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Voulez vous obtenir gratuitement <?php echo htmlspecialchars($demande['nom']); ?>?</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="process_payment.php" method="POST">
+                            <input type="hidden" name="demande_id" value="<?php echo $demande_id; ?>">
+                            <div class="mb-3">
+                                <label for="numero_carte" class="form-label">Numéro de carte bancaire</label>
+                                <input type="text" class="form-control" id="numero_carte" name="numero_carte" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Entrer</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </article>
-    </main>
-
-    <footer style="margin-top: 50px; text-align: center;">
-        <p>&copy; 2025 FITAKA. Tous droits réservés.</p>
-    </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
