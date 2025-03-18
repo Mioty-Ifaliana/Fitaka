@@ -33,7 +33,7 @@ $canonical = $protocol . $_SERVER['HTTP_HOST'] . '/demandes';
     <header>
         <h1>Liste des Demandes</h1>
         <nav>
-            <a href="about.html">À propos</a> |
+            <a href="index.php">À propos</a> |
             <a href="form.php">Nouvelle demande</a>
         </nav>
     </header>
