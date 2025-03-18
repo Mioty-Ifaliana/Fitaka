@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db_connect.php';
+require_once 'myCon.php';
 
 if (isset($_GET['id'])) {
     $demande_id = $_GET['id'];
