@@ -28,6 +28,15 @@ $canonical = $protocol . $_SERVER['HTTP_HOST'] . '/demandes';
     <title>Liste des Demandes - FITAKA</title>
     <meta name="description" content="Liste complète des demandes soumises sur FITAKA">
     <link rel="canonical" href="<?php echo $canonical; ?>">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CEHGD73MDW"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CEHGD73MDW');
+    </script>
 </head>
 <body>
     <header>

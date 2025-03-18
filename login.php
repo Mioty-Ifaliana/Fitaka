@@ -10,6 +10,15 @@ unset($_SESSION['error']); // Supprime l'erreur après l'affichage
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CEHGD73MDW"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CEHGD73MDW');
+    </script>
 </head>
 <body>
     <h2>Connexion</h2>
