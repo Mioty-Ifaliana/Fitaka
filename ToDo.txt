@@ -6,15 +6,15 @@ FITAKA :
 
 -Concept : 
     FRONT OFFICE :
-    1) Page a propos : avec bouton continuer 
-    2) Formulaire de demande de ce que vous voulez -> creation link 
-    3) Liste de tous les demandes (SEO)
-    4) Details de la demande
-    5) Voulez vous obtenir gratuitement ? Entrez la carte bancaire 
-    6) Azoko ny volanla fa misaotra
+    1) Page a propos : avec bouton continuer  Mitia 
+    2) Formulaire de demande de ce que vous voulez -> creation link Mitia
+    3) Liste de tous les demandes (SEO) Mitia 
+    4) Details de la demande Ifa
+    5) Voulez vous obtenir gratuitement ? Entrez la carte bancaire Ifa
+    6) Azoko ny volanla fa misaotra Ifa
 
     BACK OFFICE :
-    1)Login
-    1) Affichage google analytics
-    2) Affichage google tag manager
+    1)Login Ifa
+    1) Affichage google analytics Ifa
+    2) Affichage google tag manager Mitia
 
