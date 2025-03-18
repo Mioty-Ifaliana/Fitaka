@@ -14,6 +14,7 @@ FITAKA :
     6) Azoko ny volanla fa misaotra
 
     BACK OFFICE :
+    1)Login
     1) Affichage google analytics
     2) Affichage google tag manager
 
