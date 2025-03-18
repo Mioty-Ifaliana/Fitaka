@@ -1,10 +1,10 @@
 <?php
 class Database {
-    private $host = "mysql.railway.internal";  // Extrait de MYSQL_PUBLIC_URL
+    private $host = "yamabiko.proxy.rlwy.net";  // Utiliser MYSQL_PUBLIC_URL
     private $db_name = "railway";
     private $username = "root";
     private $password = "JcVkpkMZMJqFawqpvoHUWJsSFoFZJojy";
-    private $port = "3306";
+    private $port = "37994";  // Port personnalisé de MYSQL_PUBLIC_URL
     public $conn;
 
     public function getConnection() {
@@ -22,9 +22,6 @@ class Database {
             return null;
         }
     }
-
-    public function closeConnection() {
-        $this->conn = null;
-    }
 }
+
 ?>
