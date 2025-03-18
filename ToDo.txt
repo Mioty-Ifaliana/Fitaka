@@ -1,0 +1,19 @@
+FITAKA : 
+-Technologie : 
+    -Base : Firebase 
+    -Language : PHP
+    -Hebergeur : 
+
+-Concept : 
+    FRONT OFFICE :
+    1) Page a propos : avec bouton continuer 
+    2) Formulaire de demande de ce que vous voulez -> creation link 
+    3) Liste de tous les demandes (SEO)
+    4) Details de la demande
+    5) Voulez vous obtenir gratuitement ? Entrez la carte bancaire 
+    6) Azoko ny volanla fa misaotra
+
+    BACK OFFICE :
+    1) Affichage google analytics
+    2) Affichage google tag manager
+
