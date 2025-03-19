@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    && docker-php-ext-install mbstring exif pcntl bcmath gd
+    && apt-get clean
+
+RUN docker-php-ext-install bcmath
 
 # Activer le module mod_rewrite pour Apache
 RUN a2enmod rewrite
@@ -28,12 +30,6 @@ COPY . .
 
 # Installer les dépendances avec Composer
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
-
-# Installer Google Analytics Data API avec Composer
-RUN composer require google/analytics-data
-
-# Forcer le rechargement de l'autoload de Composer
-RUN composer dump-autoload
 
 # Exposer le port 80 pour le serveur Apache
 EXPOSE 80
