@@ -10,30 +10,33 @@ function getAnalyticsData() {
     $client->addScope(AnalyticsData::ANALYTICS_READONLY);
 
     $analytics = new AnalyticsData($client);
-
     $propertyId = "349501815"; 
 
     $request = new Google\Service\AnalyticsData\RunReportRequest([
         'dateRanges' => [['startDate' => '7daysAgo', 'endDate' => 'today']],
         'metrics' => [
-            ['name' => 'activeUsers'],    // Nombre d'utilisateurs
-            ['name' => 'eventCount'],     // Nombre total d'événements (clics)
-            ['name' => 'screenPageViews'] // Nombre de vues des pages
-        ],
-        'dimensions' => [
-            ['name' => 'eventName'] // Type d'événements (ex: clics sur bouton)
+            ['name' => 'activeUsers'],    
+            ['name' => 'eventCount'],     
+            ['name' => 'screenPageViews']
         ]
     ]);
 
-    // Exécuter la requête
-    $response = $analytics->properties->runReport("properties/{$propertyId}", $request);
+    try {
+        $response = $analytics->properties->runReport("properties/{$propertyId}", $request);
+        $results = [];
 
-    return $response;
+        foreach ($response->getRows() as $row) {
+            foreach ($row->getMetricValues() as $index => $metricValue) {
+                $metricName = $response->getMetricHeaders()[$index]->getName();
+                $results[$metricName] = $metricValue->getValue();
+            }
+        }
+
+        echo json_encode($results, JSON_PRETTY_PRINT);
+    } catch (Exception $e) {
+        echo json_encode(["error" => $e->getMessage()]);
+    }
 }
 
-// Récupérer les données
-$data = getAnalyticsData();
-
-// Affichage des résultats en JSON
-echo json_encode($data, JSON_PRETTY_PRINT);
+getAnalyticsData();
 ?>
