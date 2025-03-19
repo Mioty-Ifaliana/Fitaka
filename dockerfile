@@ -27,8 +27,6 @@ WORKDIR /var/www/html
 
 # Copier tous les fichiers du projet dans le conteneur
 COPY . .
-RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 755 /var/www/html
 
 # Installer les dépendances avec Composer
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
