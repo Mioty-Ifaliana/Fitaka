@@ -16,7 +16,7 @@ function getAnalyticsData() {
     }
 
     // Définir les credentials pour Google API
-    putenv("GOOGLE_APPLICATION_CREDENTIALS=$credentialsPath");
+    putenv("GOOGLE_APPLICATION_CREDENTIALS_JSON=$credentialsPath");
 
     // Définition du Property ID
     $property_id = "349501815"; // NE PAS CHANGER
