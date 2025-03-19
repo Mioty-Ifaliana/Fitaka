@@ -1,6 +1,11 @@
 <?php 
 require_once 'vendor/autoload.php';
 
+if (!class_exists('Google\Analytics\Data\V1beta\BetaAnalyticsDataClient')) {
+    die(json_encode(["error" => "La classe Google Analytics Data Client est introuvable. Vérifiez votre installation Composer."]));
+}
+
+
 use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\RunReportRequest;
 use Google\Analytics\Data\V1beta\DateRange;
