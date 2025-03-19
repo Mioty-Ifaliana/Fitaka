@@ -26,10 +26,10 @@ unset($_SESSION['error']); // Supprime l'erreur après l'affichage
     
     <form method="POST" action="auth.php">
         <label>Email :</label>
-        <input type="email" name="email" required><br><br>
+        <input type="email" name="email" placeholder="admin@gmail.com" required><br><br>
 
         <label>Mot de passe :</label>
-        <input type="password" name="password" required><br><br>
+        <input type="password" name="password" placeholder="123456" required><br><br>
 
         <button type="submit">Se connecter</button>
     </form>
