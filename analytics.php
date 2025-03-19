@@ -1,5 +1,5 @@
 <?php
-require_once 'google-api-php-client/vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use Google\Client;
 use Google\Service\AnalyticsData;
