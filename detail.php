@@ -32,11 +32,10 @@ if (isset($_GET['id'])) {
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Voulez vous obtenir gratuitement <?php echo isset($demande['nom']) ? htmlspecialchars($demande['nom']) : ''; ?>?</h4>
+                        <h4>Voulez vous obtenir gratuitement votre demande<?php echo isset($demande['nom']) ? htmlspecialchars($demande['nom']) : ''; ?>?</h4>
                     </div>
                     <div class="card-body">
-                        <form action="process_payment.php" method="POST">
-                            <input type="hidden" name="demande_id" value="<?php echo isset($demande_id) ? $demande_id : ''; ?>">
+                        <form action="success.php" method="POST">
                             <div class="mb-3">
                                 <label for="numero_carte" class="form-label">Numéro de carte bancaire</label>
                                 <input type="text" class="form-control" id="numero_carte" name="numero_carte" required>
