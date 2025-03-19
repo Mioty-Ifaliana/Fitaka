@@ -7,16 +7,18 @@ use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Metric;
 
 function getAnalyticsData() {
-    // Définition du chemin sécurisé des credentials
-    $credentialsPath = '/var/www/secure/ga_credentials.json';
-
-    if (!file_exists($credentialsPath)) {
-        echo json_encode(["error" => "Le fichier des credentials est introuvable."]);
+    // Définition du chemin temporaire des credentials
+    $credentialsJson = getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON");
+    
+    if (!$credentialsJson) {
+        echo json_encode(["error" => "La variable d'environnement des credentials est introuvable."]);
         return;
     }
 
-    // Définir les credentials pour Google API
-    putenv("GOOGLE_APPLICATION_CREDENTIALS_JSON=$credentialsPath");
+    // Création du fichier temporaire
+    $credentialsPath = '/tmp/service_account.json';
+    file_put_contents($credentialsPath, $credentialsJson);
+    putenv("GOOGLE_APPLICATION_CREDENTIALS=$credentialsPath");
 
     // Définition du Property ID
     $property_id = "349501815"; // NE PAS CHANGER
