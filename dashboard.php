@@ -1,6 +1,11 @@
 <?php
 $analyticsData = file_get_contents("https://fitaka.onrender.com/analytics.php");
-$data = json_decode($analyticsData, true);
+
+if ($analyticsData === false) {
+    $data = null;
+} else {
+    $data = json_decode($analyticsData, true);
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +28,9 @@ $data = json_decode($analyticsData, true);
     <div class="container">
         <h1>Statistiques Google Analytics</h1>
 
-        <?php if (isset($data['error'])): ?>
+        <?php if ($data === null): ?>
+            <p class="error">Erreur : Impossible de récupérer les données Analytics.</p>
+        <?php elseif (isset($data['error'])): ?>
             <p class="error">Erreur : <?= htmlspecialchars($data['error']) ?></p>
         <?php else: ?>
             <table>
@@ -35,13 +42,19 @@ $data = json_decode($analyticsData, true);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($data as $row): ?>
+                    <?php if (is_array($data) && !empty($data)): ?>
+                        <?php foreach ($data as $row): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row['activeUsers'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($row['eventCount'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($row['screenPageViews'] ?? 'N/A') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <tr>
-                            <td><?= htmlspecialchars($row['activeUsers']) ?></td>
-                            <td><?= htmlspecialchars($row['eventCount']) ?></td>
-                            <td><?= htmlspecialchars($row['screenPageViews']) ?></td>
+                            <td colspan="3">Aucune donnée disponible</td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         <?php endif; ?>

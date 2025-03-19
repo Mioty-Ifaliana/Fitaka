@@ -29,6 +29,12 @@ COPY . .
 # Installer les dépendances avec Composer
 RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
+# Installer Google Analytics Data API avec Composer
+RUN composer require google/analytics-data
+
+# Forcer le rechargement de l'autoload de Composer
+RUN composer dump-autoload
+
 # Exposer le port 80 pour le serveur Apache
 EXPOSE 80
 
