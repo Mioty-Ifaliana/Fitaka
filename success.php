@@ -23,7 +23,7 @@ session_start();
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="alert alert-success text-center">
-                    <h3>Azoko ny volanla fa misaotr</h3>
+                    <h3>Azoko ny volanla fa misaotra</h3>
                 </div>
             </div>
         </div>
