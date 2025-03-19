@@ -12,7 +12,12 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libgrpc-dev \
+    protobuf-compiler \
     && docker-php-ext-install mbstring exif pcntl bcmath gd
+
+# Installer l'extension gRPC (nécessaire pour Google Analytics Data API)
+RUN pecl install grpc && echo "extension=grpc.so" > /usr/local/etc/php/conf.d/docker-php-ext-grpc.ini
 
 # Activer le module mod_rewrite pour Apache
 RUN a2enmod rewrite
