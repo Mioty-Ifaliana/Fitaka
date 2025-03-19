@@ -1,71 +1,75 @@
 <?php 
 require_once 'vendor/autoload.php';
 
-use Google\Client;
-use Google\Service\AnalyticsData;
+use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\RunReportRequest;
+use Google\Analytics\Data\V1beta\DateRange;
+use Google\Analytics\Data\V1beta\Metric;
 
 function getAnalyticsData() {
-    $client = new Client();
+    // Définition du chemin temporaire des credentials
+    $credentialsJson = getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON");
     
-    // Récupération du chemin des credentials depuis l'environnement
-    $credentialsPath = getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON");
-    
-    if (!$credentialsPath || !file_exists($credentialsPath)) {
-        echo json_encode(["error" => "Le fichier d'identification est introuvable."]);
+    if (!$credentialsJson) {
+        echo json_encode(["error" => "La variable d'environnement des credentials est introuvable."]);
         return;
     }
 
-    // Configuration du client Google avec le fichier credentials.json
-    $client->setAuthConfig($credentialsPath);
-    $client->addScope("https://www.googleapis.com/auth/analytics.readonly");
+    // Création du fichier temporaire
+    $credentialsPath = '/tmp/service_account.json';
+    file_put_contents($credentialsPath, $credentialsJson);
+    putenv("GOOGLE_APPLICATION_CREDENTIALS=$credentialsPath");
 
-    // Vérification du token d'accès
-    if ($client->isAccessTokenExpired()) {
-        echo json_encode(["error" => "Le token d'accès est expiré ou invalide."]);
-        return;
-    }
-
-    $analytics = new AnalyticsData($client);
-    $propertyId = "349501815"; // Remplace par ton vrai Property ID
-
-    // Test pour voir si le service account a accès à Google Analytics
-    try {
-        $accounts = $analytics->properties->listProperties();
-        if (empty($accounts->getProperties())) {
-            echo json_encode(["error" => "Aucune propriété trouvée. Assurez-vous que le service account a bien accès à Google Analytics."]);
-            return;
-        }
-    } catch (Exception $e) {
-        echo json_encode(["error" => "Erreur lors de l'accès aux propriétés: " . $e->getMessage()]);
-        return;
-    }
-
-    // Requête des données d'Analytics
-    $request = new Google\Service\AnalyticsData\RunReportRequest([
-        'dateRanges' => [['startDate' => '7daysAgo', 'endDate' => 'today']],
-        'metrics' => [
-            ['name' => 'activeUsers'],    
-            ['name' => 'eventCount'],     
-            ['name' => 'screenPageViews']
-        ]
-    ]);
+    // Définition du Property ID
+    $property_id = "349501815"; // NE PAS CHANGER
 
     try {
-        $response = $analytics->properties->runReport("properties/{$propertyId}", $request);
-        $results = [];
+        // Initialisation du client
+        $client = new BetaAnalyticsDataClient();
 
+        // Définition de la plage de dates
+        $dateRange = new DateRange([
+            'start_date' => '7daysAgo',
+            'end_date' => 'today'
+        ]);
+
+        // Définition des métriques
+        $metrics = [
+            new Metric(['name' => 'activeUsers']),
+            new Metric(['name' => 'eventCount']),
+            new Metric(['name' => 'screenPageViews'])
+        ];
+
+        // Création de la requête
+        $request = new RunReportRequest([
+            'property' => "properties/{$property_id}",
+            'date_ranges' => [$dateRange],
+            'metrics' => $metrics
+        ]);
+
+        // Exécution de la requête
+        $response = $client->runReport($request);
+
+        // Traitement des résultats
+        $data = [];
         foreach ($response->getRows() as $row) {
-            foreach ($row->getMetricValues() as $index => $metricValue) {
-                $metricName = $response->getMetricHeaders()[$index]->getName();
-                $results[$metricName] = $metricValue->getValue();
-            }
+            $values = $row->getMetricValues();
+            $data[] = [
+                'activeUsers' => $values[0]->getValue(),
+                'eventCount' => $values[1]->getValue(),
+                'screenPageViews' => $values[2]->getValue()
+            ];
         }
 
-        echo json_encode($results, JSON_PRETTY_PRINT);
+        // Affichage des résultats en JSON
+        header('Content-Type: application/json');
+        echo json_encode($data, JSON_PRETTY_PRINT);
+
     } catch (Exception $e) {
         echo json_encode(["error" => "Erreur lors de la récupération des données : " . $e->getMessage()]);
     }
 }
 
+// Exécuter la fonction
 getAnalyticsData();
 ?>
