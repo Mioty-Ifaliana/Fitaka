@@ -1,11 +1,6 @@
 <?php
-// Capture la sortie de analytics.php dans un buffer
-ob_start();
-include "analytics.php";
-$jsonData = ob_get_clean();
-
-// Décoder le JSON
-$data = json_decode($jsonData, true);
+$analyticsData = file_get_contents("https://fitaka.onrender.com/analytics.php");
+$data = json_decode($analyticsData, true);
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +23,8 @@ $data = json_decode($jsonData, true);
     <div class="container">
         <h1>Statistiques Google Analytics</h1>
 
-        <?php if (!$data || isset($data['error'])): ?>
-            <p class="error">Erreur : <?= isset($data['error']) ? htmlspecialchars($data['error']) : "Données non disponibles." ?></p>
+        <?php if (isset($data['error'])): ?>
+            <p class="error">Erreur : <?= htmlspecialchars($data['error']) ?></p>
         <?php else: ?>
             <table>
                 <thead>
