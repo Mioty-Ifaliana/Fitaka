@@ -8,7 +8,7 @@ function getAnalyticsData() {
     $client = new Client();
     
     // Récupération du chemin des credentials depuis l'environnement
-    $credentialsPath = getenv("GOOGLE_APPLICATION_CREDENTIALS");
+    $credentialsPath = getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON");
     
     if (!$credentialsPath || !file_exists($credentialsPath)) {
         echo json_encode(["error" => "Le fichier d'identification est introuvable."]);
