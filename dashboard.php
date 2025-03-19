@@ -1,11 +1,27 @@
 <?php
-$analyticsData = file_get_contents("https://fitaka.onrender.com/analytics.php");
+// Activer allow_url_fopen si nécessaire
+ini_set('allow_url_fopen', 1);
 
-if ($analyticsData === false) {
-    $data = null;
-} else {
-    $data = json_decode($analyticsData, true);
+// Fonction pour récupérer les données avec cURL
+function fetchAnalyticsData($url) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        return json_encode(["error" => "Erreur cURL : " . curl_error($ch)]);
+    }
+    
+    curl_close($ch);
+    return $result;
 }
+
+// Récupération des données
+$analyticsData = fetchAnalyticsData("https://fitaka.onrender.com/analytics.php");
+
+$data = $analyticsData ? json_decode($analyticsData, true) : null;
 ?>
 
 <!DOCTYPE html>

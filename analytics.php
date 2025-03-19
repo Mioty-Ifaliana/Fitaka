@@ -1,74 +1,57 @@
-<?php 
+<?php
 require_once 'vendor/autoload.php';
 
-if (!class_exists('Google\Analytics\Data\V1beta\BetaAnalyticsDataClient')) {
-    die(json_encode(["error" => "La classe Google Analytics Data Client est introuvable. Vérifiez votre installation Composer."]));
-}
-
-
-use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
-use Google\Analytics\Data\V1beta\RunReportRequest;
-use Google\Analytics\Data\V1beta\DateRange;
-use Google\Analytics\Data\V1beta\Metric;
+use Google\Client;
+use Google\Service\AnalyticsReporting;
 
 function getAnalyticsData() {
-    // Définition du chemin temporaire des credentials
     $credentialsJson = getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON");
-    
+
     if (!$credentialsJson) {
         echo json_encode(["error" => "La variable d'environnement des credentials est introuvable."]);
         return;
     }
 
-    // Création du fichier temporaire
+    // Créer un fichier temporaire pour stocker les credentials
     $credentialsPath = '/tmp/service_account.json';
     file_put_contents($credentialsPath, $credentialsJson);
-    putenv("GOOGLE_APPLICATION_CREDENTIALS=$credentialsPath");
 
-    // Définition du Property ID
-    $property_id = "349501815"; // NE PAS CHANGER
+    // Initialisation du client Google
+    $client = new Client();
+    $client->setAuthConfig($credentialsPath);
+    $client->setScopes(['https://www.googleapis.com/auth/analytics.readonly']);
+
+    // Initialisation du service Google Analytics
+    $analytics = new AnalyticsReporting($client);
+
+    // Paramètres de la requête
+    $VIEW_ID = "349501815"; // Remplace avec ton View ID Google Analytics
+
+    $dateRange = new Google\Service\AnalyticsReporting\DateRange();
+    $dateRange->setStartDate("7daysAgo");
+    $dateRange->setEndDate("today");
+
+    $metrics = new Google\Service\AnalyticsReporting\Metric();
+    $metrics->setExpression("ga:users");
+
+    $request = new Google\Service\AnalyticsReporting\ReportRequest();
+    $request->setViewId($VIEW_ID);
+    $request->setDateRanges($dateRange);
+    $request->setMetrics([$metrics]);
+
+    $body = new Google\Service\AnalyticsReporting\GetReportsRequest();
+    $body->setReportRequests([$request]);
 
     try {
-        // Initialisation du client
-        $client = new BetaAnalyticsDataClient();
+        // Exécuter la requête
+        $reports = $analytics->reports->batchGet($body);
 
-        // Définition de la plage de dates
-        $dateRange = new DateRange([
-            'start_date' => '7daysAgo',
-            'end_date' => 'today'
-        ]);
+        $rows = $reports->getReports()[0]->getData()->getRows();
+        $users = $rows ? $rows[0]->getMetrics()[0]->getValues()[0] : 0;
 
-        // Définition des métriques
-        $metrics = [
-            new Metric(['name' => 'activeUsers']),
-            new Metric(['name' => 'eventCount']),
-            new Metric(['name' => 'screenPageViews'])
-        ];
-
-        // Création de la requête
-        $request = new RunReportRequest([
-            'property' => "properties/{$property_id}",
-            'date_ranges' => [$dateRange],
-            'metrics' => $metrics
-        ]);
-
-        // Exécution de la requête
-        $response = $client->runReport($request);
-
-        // Traitement des résultats
-        $data = [];
-        foreach ($response->getRows() as $row) {
-            $values = $row->getMetricValues();
-            $data[] = [
-                'activeUsers' => $values[0]->getValue(),
-                'eventCount' => $values[1]->getValue(),
-                'screenPageViews' => $values[2]->getValue()
-            ];
-        }
-
-        // Affichage des résultats en JSON
+        // Affichage en JSON
         header('Content-Type: application/json');
-        echo json_encode($data, JSON_PRETTY_PRINT);
+        echo json_encode(["users" => $users]);
 
     } catch (Exception $e) {
         echo json_encode(["error" => "Erreur lors de la récupération des données : " . $e->getMessage()]);
