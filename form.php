@@ -30,10 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -60,19 +56,6 @@ session_start();
     </header>
 
     <main>
-        <?php
-        // Affichage des erreurs
-        if (isset($_SESSION['error'])) {
-            echo '<p style="color: red;">' . $_SESSION['error'] . '</p>';
-            unset($_SESSION['error']);
-        }
-        if (isset($_SESSION['errors'])) {
-            foreach ($_SESSION['errors'] as $error) {
-                echo '<p style="color: red;">' . $error . '</p>';
-            }
-            unset($_SESSION['errors']);
-        }
-        ?>
 
         <form method="POST" action="traitement.php">
             <div style="margin-bottom: 15px;">
