@@ -1,6 +1,11 @@
 <?php
-$analyticsData = file_get_contents("analytics.php");
-$data = json_decode($analyticsData, true);
+// Capture la sortie de analytics.php dans un buffer
+ob_start();
+include "analytics.php";
+$jsonData = ob_get_clean();
+
+// Décoder le JSON
+$data = json_decode($jsonData, true);
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +28,8 @@ $data = json_decode($analyticsData, true);
     <div class="container">
         <h1>Statistiques Google Analytics</h1>
 
-        <?php if (isset($data['error'])): ?>
-            <p class="error">Erreur : <?= htmlspecialchars($data['error']) ?></p>
+        <?php if (!$data || isset($data['error'])): ?>
+            <p class="error">Erreur : <?= isset($data['error']) ? htmlspecialchars($data['error']) : "Données non disponibles." ?></p>
         <?php else: ?>
             <table>
                 <thead>
