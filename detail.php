@@ -26,6 +26,93 @@ if (isset($_GET['id'])) {
     <title>Détails de la demande</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    /* Reset de base */
+    body, h4, p, label, input, button {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #fff; /* Fond blanc */
+        color: #000; /* Texte noir */
+        line-height: 1.6;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #f9f9f9; /* Fond gris très clair */
+        border: 1px solid #ddd; /* Bordure grise */
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    }
+
+    .card-header {
+        background-color: #eee; /* Fond gris clair */
+        padding: 20px;
+        border-bottom: 1px solid #ddd; /* Ligne de séparation */
+    }
+
+    .card-header h4 {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 0;
+        color: #000; /* Texte noir */
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #000; /* Texte noir */
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd; /* Bordure grise */
+        border-radius: 5px;
+        background-color: #fff; /* Fond blanc */
+        color: #000; /* Texte noir */
+        font-size: 1em;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #000; /* Bordure noire au focus */
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #000; /* Fond noir */
+        color: #fff; /* Texte blanc */
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #fff; /* Fond blanc au survol */
+        color: #000; /* Texte noir au survol */
+        border: 1px solid #000; /* Bordure noire au survol */
+    }
+</style>
 <body>
     <div class="container mt-5">
         <div class="row">

@@ -46,6 +46,121 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   gtag('config', 'G-CEHGD73MDW');
 </script>
 </head>
+<style>
+    /* Reset de base */
+    body, h1, p, a, label, input, textarea, button {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #000; /* Fond noir */
+        color: #fff; /* Texte blanc */
+        line-height: 1.6;
+        padding: 20px;
+    }
+
+    header {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 2px solid #fff; /* Ligne de séparation */
+    }
+
+    header h1 {
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+    nav a {
+        color: #fff; /* Texte blanc */
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: bold;
+    }
+
+    nav a:hover {
+        text-decoration: underline; /* Soulignement au survol */
+    }
+
+    main {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    form {
+        background-color: #111; /* Fond gris très foncé */
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #fff; /* Bordure blanche */
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #fff; /* Texte blanc */
+    }
+
+    input[type="text"],
+    input[type="url"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #fff; /* Bordure blanche */
+        border-radius: 5px;
+        background-color: #000; /* Fond noir */
+        color: #fff; /* Texte blanc */
+        font-size: 1em;
+    }
+
+    textarea {
+        resize: vertical; /* Permet le redimensionnement vertical uniquement */
+    }
+
+    button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #fff; /* Fond blanc */
+        color: #000; /* Texte noir */
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #000; /* Fond noir au survol */
+        color: #fff; /* Texte blanc au survol */
+        border: 1px solid #fff; /* Bordure blanche au survol */
+    }
+
+    footer {
+        margin-top: 50px;
+        text-align: center;
+        padding: 20px 0;
+        border-top: 2px solid #fff; /* Ligne de séparation */
+        font-size: 0.9em;
+        color: #ddd; /* Texte gris clair */
+    }
+
+    /* Style pour les messages d'erreur */
+    p[style*="color: red;"] {
+        background-color: #222; /* Fond gris très foncé */
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ff4444; /* Bordure rouge */
+        margin-bottom: 20px;
+        color: #ff4444; /* Texte rouge */
+    }
+</style>
 <body>
     <header>
         <h1>Nouvelle Demande</h1>

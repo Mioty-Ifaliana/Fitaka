@@ -38,6 +38,112 @@ $canonical = $protocol . $_SERVER['HTTP_HOST'] . '/demandes';
     gtag('config', 'G-CEHGD73MDW');
     </script>
 </head>
+<style>
+    /* Reset de base */
+    body, h1, p, a, article, h2 {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #000; /* Fond noir */
+        color: #fff; /* Texte blanc */
+        line-height: 1.6;
+        padding: 20px;
+    }
+
+    header {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 2px solid #fff; /* Ligne de séparation */
+    }
+
+    header h1 {
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+    nav a {
+        color: #fff; /* Texte blanc */
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: bold;
+    }
+
+    nav a:hover {
+        text-decoration: underline; /* Soulignement au survol */
+    }
+
+    main {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .demandes {
+        margin-top: 20px;
+    }
+
+    article {
+        background-color: #111; /* Fond gris très foncé */
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid #fff; /* Bordure blanche */
+    }
+
+    article h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    article h2 a {
+        color: #fff; /* Texte blanc */
+        text-decoration: none;
+    }
+
+    article h2 a:hover {
+        text-decoration: underline; /* Soulignement au survol */
+    }
+
+    article p {
+        font-size: 1em;
+        color: #ddd; /* Texte gris clair */
+    }
+
+    footer {
+        margin-top: 50px;
+        text-align: center;
+        padding: 20px 0;
+        border-top: 2px solid #fff; /* Ligne de séparation */
+        font-size: 0.9em;
+        color: #ddd; /* Texte gris clair */
+    }
+
+    /* Style pour les messages de succès et d'erreur */
+    p[style*="color: green;"],
+    p[style*="color: red;"] {
+        background-color: #222; /* Fond gris très foncé */
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    p[style*="color: green;"] {
+        border: 1px solid #4CAF50; /* Bordure verte */
+        color: #4CAF50; /* Texte vert */
+    }
+
+    p[style*="color: red;"] {
+        border: 1px solid #ff4444; /* Bordure rouge */
+        color: #ff4444; /* Texte rouge */
+    }
+</style>
 <body>
     <header>
         <h1>Liste des Demandes</h1>
